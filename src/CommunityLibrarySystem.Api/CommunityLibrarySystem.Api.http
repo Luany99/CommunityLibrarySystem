@@ -1,0 +1,6 @@
+@CommunityLibrarySystem.Api_HostAddress = http://localhost:5167
+
+GET {{CommunityLibrarySystem.Api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
