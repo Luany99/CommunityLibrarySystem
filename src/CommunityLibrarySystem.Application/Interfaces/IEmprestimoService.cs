@@ -6,8 +6,10 @@ namespace CommunityLibrarySystem.Application.Interfaces
     public interface IEmprestimoService
     {
         Emprestimo SolicitarEmprestimo(EmprestimoDto dto);
-        void DevolverEmprestimo(Guid emprestimoId);
-        Emprestimo ObterPorId(Guid id);
+        void DevolverEmprestimo(int emprestimoId);
+        Emprestimo ObterPorId(int id);
         IEnumerable<Emprestimo> Listar();
+        PagedResult<Emprestimo> ListarPaginado(int page, int pageSize);
+
     }
 }

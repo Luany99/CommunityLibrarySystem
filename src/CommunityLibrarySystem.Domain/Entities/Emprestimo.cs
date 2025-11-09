@@ -1,20 +1,22 @@
 ﻿using CommunityLibrarySystem.Domain.Enums;
+using System.Text.Json.Serialization;
 
 namespace CommunityLibrarySystem.Domain.Entities
 {
     public class Emprestimo
     {
-        public Guid Id { get; private set; }
-        public Guid LivroId { get; private set; }
+        public int Id { get; private set; }
+        public int LivroId { get; private set; }
         public DateTime DataEmprestimo { get; private set; }
         public DateTime? DataDevolucao { get; private set; }
         public StatusEmprestimo Status { get; private set; }
+        [JsonIgnore]
+        public Livro Livro { get; set; }
 
         protected Emprestimo() { }
 
-        public Emprestimo(Guid livroId)
+        public Emprestimo(int livroId)
         {
-            Id = Guid.NewGuid();
             LivroId = livroId;
             DataEmprestimo = DateTime.UtcNow;
             Status = StatusEmprestimo.Ativo;

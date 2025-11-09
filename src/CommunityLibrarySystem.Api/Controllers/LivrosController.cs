@@ -26,17 +26,24 @@ namespace CommunityLibrarySystem.Api.Controllers
         }
 
         [HttpGet("{id}")]
-        public IActionResult ObterPorId(Guid id)
+        public IActionResult ObterPorId(int id)
         {
             var livro = _livroService.ObterPorId(id);
             if (livro == null) return NotFound();
             return Ok(livro);
         }
 
-        [HttpGet]
+        [HttpGet("listar-todos")]
         public IActionResult Listar()
         {
             var livros = _livroService.Listar();
+            return Ok(livros);
+        }
+
+        [HttpGet]
+        public IActionResult Listar([FromQuery] int page = 1, [FromQuery] int pageSize = 10)
+        {
+            var livros = _livroService.ListarPaginado(page, pageSize);
             return Ok(livros);
         }
     }

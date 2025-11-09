@@ -20,7 +20,7 @@ namespace CommunityLibrarySystem.Application.Services
             return _livroRepository.Adicionar(livro);
         }
 
-        public Livro ObterPorId(Guid id)
+        public Livro ObterPorId(int id)
         {
             return _livroRepository.ObterPorId(id);
         }
@@ -28,6 +28,18 @@ namespace CommunityLibrarySystem.Application.Services
         public IEnumerable<Livro> Listar()
         {
             return _livroRepository.Listar();
+        }
+
+        public PagedResult<Livro> ListarPaginado(int page, int pageSize)
+        {
+            var (items, total) = _livroRepository.ListarPaginado(page, pageSize);
+            return new PagedResult<Livro>
+            {
+                Items = items,
+                TotalItems = total,
+                Page = page,
+                PageSize = pageSize
+            };
         }
     }
 }

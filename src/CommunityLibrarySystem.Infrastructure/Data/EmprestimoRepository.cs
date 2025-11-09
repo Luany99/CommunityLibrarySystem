@@ -1,5 +1,6 @@
 ﻿using CommunityLibrarySystem.Domain.Entities;
 using CommunityLibrarySystem.Domain.Repositories;
+using CommunityLibrarySystem.Infrastructure.Extensions;
 using Microsoft.EntityFrameworkCore;
 
 namespace CommunityLibrarySystem.Infrastructure.Data
@@ -20,7 +21,7 @@ namespace CommunityLibrarySystem.Infrastructure.Data
             return emprestimo;
         }
 
-        public Emprestimo ObterPorId(Guid id)
+        public Emprestimo ObterPorId(int id)
         {
             return _context.Emprestimos.Find(id);
         }
@@ -28,6 +29,11 @@ namespace CommunityLibrarySystem.Infrastructure.Data
         public IEnumerable<Emprestimo> Listar()
         {
             return _context.Emprestimos.AsNoTracking().ToList();
+        }
+
+        public (IEnumerable<Emprestimo> Items, int Total) ListarPaginado(int page, int pageSize)
+        {
+            return _context.Emprestimos.AsNoTracking().Paginar(page, pageSize);
         }
 
         public void Atualizar(Emprestimo emprestimo)

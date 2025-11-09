@@ -5,6 +5,6 @@ namespace CommunityLibrarySystem.Application.DTOs
     public class EmprestimoDto
     {
         [Required]
-        public Guid LivroId { get; set; }
+        public int LivroId { get; set; }
     }
 }

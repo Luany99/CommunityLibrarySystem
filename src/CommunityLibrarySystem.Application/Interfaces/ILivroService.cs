@@ -6,7 +6,8 @@ namespace CommunityLibrarySystem.Application.Interfaces
     public interface ILivroService
     {
         Livro CriarLivro(LivroDto dto);
-        Livro ObterPorId(Guid id);
+        Livro ObterPorId(int id);
         IEnumerable<Livro> Listar();
+        PagedResult<Livro> ListarPaginado(int page, int pageSize);
     }
 }

@@ -1,5 +1,6 @@
 ﻿using CommunityLibrarySystem.Domain.Entities;
 using CommunityLibrarySystem.Domain.Repositories;
+using CommunityLibrarySystem.Infrastructure.Extensions;
 using Microsoft.EntityFrameworkCore;
 
 namespace CommunityLibrarySystem.Infrastructure.Data
@@ -20,7 +21,7 @@ namespace CommunityLibrarySystem.Infrastructure.Data
             return livro;
         }
 
-        public Livro ObterPorId(Guid id)
+        public Livro ObterPorId(int id)
         {
             return _context.Livros.Find(id);
         }
@@ -28,6 +29,11 @@ namespace CommunityLibrarySystem.Infrastructure.Data
         public IEnumerable<Livro> Listar()
         {
             return _context.Livros.AsNoTracking().ToList();
+        }
+
+        public (IEnumerable<Livro> Items, int Total) ListarPaginado(int page, int pageSize)
+        {
+            return _context.Livros.AsNoTracking().Paginar(page, pageSize);
         }
 
         public void Atualizar(Livro livro)

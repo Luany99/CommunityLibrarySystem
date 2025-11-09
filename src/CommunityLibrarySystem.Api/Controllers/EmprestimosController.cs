@@ -33,12 +33,12 @@ namespace CommunityLibrarySystem.Api.Controllers
         }
 
         [HttpPost("{id}/devolver")]
-        public IActionResult DevolverEmprestimo(Guid id)
+        public IActionResult DevolverEmprestimo(int id)
         {
             try
             {
                 _emprestimoService.DevolverEmprestimo(id);
-                return NoContent();
+                return Ok();
             }
             catch (Exception ex)
             {
@@ -47,17 +47,24 @@ namespace CommunityLibrarySystem.Api.Controllers
         }
 
         [HttpGet("{id}")]
-        public IActionResult ObterPorId(Guid id)
+        public IActionResult ObterPorId(int id)
         {
             var emprestimo = _emprestimoService.ObterPorId(id);
             if (emprestimo == null) return NotFound();
             return Ok(emprestimo);
         }
 
-        [HttpGet]
+        [HttpGet("listar-todos")]
         public IActionResult Listar()
         {
             var emprestimos = _emprestimoService.Listar();
+            return Ok(emprestimos);
+        }
+
+        [HttpGet]
+        public IActionResult Listar([FromQuery] int page = 1, [FromQuery] int pageSize = 10)
+        {
+            var emprestimos = _emprestimoService.ListarPaginado(page, pageSize);
             return Ok(emprestimos);
         }
     }

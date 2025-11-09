@@ -18,9 +18,8 @@ namespace CommunityLibrarySystem.Application.Services
 
         public Emprestimo SolicitarEmprestimo(EmprestimoDto dto)
         {
-            var livro = _livroRepository.ObterPorId(dto.LivroId);
-            if (livro == null)
-                throw new ArgumentException("Livro não encontrado.");
+            var livro = _livroRepository.ObterPorId(dto.LivroId)
+                ?? throw new ArgumentException("Livro não encontrado.");
 
             livro.ReduzirQuantidade();
             _livroRepository.Atualizar(livro);
@@ -29,21 +28,23 @@ namespace CommunityLibrarySystem.Application.Services
             return _emprestimoRepository.Adicionar(emprestimo);
         }
 
-        public void DevolverEmprestimo(Guid emprestimoId)
+        public void DevolverEmprestimo(int emprestimoId)
         {
-            var emprestimo = _emprestimoRepository.ObterPorId(emprestimoId);
-            if (emprestimo == null)
-                throw new ArgumentException("Empréstimo não encontrado.");
+            var emprestimo = _emprestimoRepository.ObterPorId(emprestimoId)
+                ?? throw new InvalidOperationException("Empréstimo não encontrado.");
+
+            var livro = _livroRepository.ObterPorId(emprestimo.LivroId)
+                ?? throw new InvalidOperationException("Livro associado ao empréstimo não foi encontrado.");
 
             emprestimo.Devolver();
-            _emprestimoRepository.Atualizar(emprestimo);
-
-            var livro = _livroRepository.ObterPorId(emprestimo.LivroId);
             livro.AumentarQuantidade();
+
+            _emprestimoRepository.Atualizar(emprestimo);
             _livroRepository.Atualizar(livro);
         }
 
-        public Emprestimo ObterPorId(Guid id)
+
+        public Emprestimo ObterPorId(int id)
         {
             return _emprestimoRepository.ObterPorId(id);
         }
@@ -51,6 +52,18 @@ namespace CommunityLibrarySystem.Application.Services
         public IEnumerable<Emprestimo> Listar()
         {
             return _emprestimoRepository.Listar();
+        }
+
+        public PagedResult<Emprestimo> ListarPaginado(int page, int pageSize)
+        {
+            var (items, total) = _emprestimoRepository.ListarPaginado(page, pageSize);
+            return new PagedResult<Emprestimo>
+            {
+                Items = items,
+                TotalItems = total,
+                Page = page,
+                PageSize = pageSize
+            };
         }
     }
 }

@@ -1,12 +1,16 @@
-﻿namespace CommunityLibrarySystem.Domain.Entities
+﻿using System.Text.Json.Serialization;
+
+namespace CommunityLibrarySystem.Domain.Entities
 {
     public class Livro
     {
-        public Guid Id { get; private set; }
+        public int Id { get; private set; }
         public string Titulo { get; private set; }
         public string Autor { get; private set; }
         public int AnoPublicacao { get; private set; }
         public int QuantidadeDisponivel { get; private set; }
+        [JsonIgnore]
+        public ICollection<Emprestimo> Emprestimos { get; set; }
 
         protected Livro() { }
 
@@ -19,7 +23,6 @@
             if (quantidadeDisponivel < 0)
                 throw new ArgumentException("Quantidade disponível não pode ser negativa.");
 
-            Id = Guid.NewGuid();
             Titulo = titulo;
             Autor = autor;
             AnoPublicacao = anoPublicacao;
