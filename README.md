@@ -60,7 +60,7 @@ Edite o arquivo `src/CommunityLibrarySystem.Api/appsettings.json` e configure a 
 ```json
 {
   "ConnectionStrings": {
-    "DefaultConnection": "Server=localhost;Database=CommunityLibrarySystem;User Id=sa;Password={sua senha};TrustServerCertificate=True;"
+    "DefaultConnection": "Server=localhost;Database=CommunityLibrarySystem;User Id=sa;Password=Sua Senha;TrustServerCertificate=True;"
   }
 }
 ```
