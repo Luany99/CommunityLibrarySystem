@@ -1,4 +1,4 @@
-# 📚 Community Library System
+# Community Library System
 
 O **Community Library System** é uma API RESTful que permite gerenciar uma biblioteca comunitária, possibilitando o cadastro de livros, controle de empréstimos e devoluções, além de autenticação segura de usuários.
 
@@ -60,7 +60,7 @@ Edite o arquivo `src/CommunityLibrarySystem.Api/appsettings.json` e configure a 
 ```json
 {
   "ConnectionStrings": {
-    "DefaultConnection": "Server=localhost;Database=CommunityLibrarySystem;User Id={seu usuário};Password={sua senha};TrustServerCertificate=True;"
+    "DefaultConnection": "Server=localhost;Database=CommunityLibrarySystem;User Id=sa;Password={sua senha};TrustServerCertificate=True;"
   }
 }
 ```
