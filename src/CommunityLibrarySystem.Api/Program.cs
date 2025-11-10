@@ -1,9 +1,4 @@
-
-using CommunityLibrarySystem.Application.Interfaces;
-using CommunityLibrarySystem.Application.Services;
-using CommunityLibrarySystem.Domain.Repositories;
-using CommunityLibrarySystem.Infrastructure.Data;
-using Microsoft.EntityFrameworkCore;
+using CommunityLibrarySystem.Api.Extensions;
 
 namespace CommunityLibrarySystem.Api
 {
@@ -13,25 +8,10 @@ namespace CommunityLibrarySystem.Api
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            // Add services to the container.
-
-            builder.Services.AddControllers();
-            // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-            builder.Services.AddEndpointsApiExplorer();
-            builder.Services.AddSwaggerGen();
-
-
-            builder.Services.AddDbContext<LibraryDbContext>(options =>
-            options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
-
-            builder.Services.AddScoped<ILivroRepository, LivroRepository>();
-            builder.Services.AddScoped<IEmprestimoRepository, EmprestimoRepository>();
-            builder.Services.AddScoped<ILivroService, LivroService>();
-            builder.Services.AddScoped<IEmprestimoService, EmprestimoService>();
+            builder.Services.AddApiConfiguration(builder.Configuration);
 
             var app = builder.Build();
 
-            // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
             {
                 app.UseSwagger();
@@ -40,8 +20,8 @@ namespace CommunityLibrarySystem.Api
 
             app.UseHttpsRedirection();
 
+            app.UseAuthentication();
             app.UseAuthorization();
-
 
             app.MapControllers();
 

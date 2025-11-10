@@ -17,6 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\CommunityLibrarySystem.Application\CommunityLibrarySystem.Application.csproj" />
     <ProjectReference Include="..\CommunityLibrarySystem.Domain\CommunityLibrarySystem.Domain.csproj" />
   </ItemGroup>
 
